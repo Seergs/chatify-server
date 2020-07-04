@@ -18,8 +18,8 @@ const io = socketio(server);
 app.use(cors());
 app.use(morgan("dev"));
 
-import productRouter from "./routes/productRoutes";
-app.use("/products", productRouter);
+import messagesRoutes from "./routes/messagesRoutes";
+app.use("/messages", messagesRoutes);
 
 app.use(errorMiddleware);
 
