@@ -5,9 +5,7 @@ import http from "http";
 import socketio from "socket.io";
 import { config } from "dotenv";
 
-if (process.env.NODE_ENV === "development") {
-  config();
-}
+//config();
 
 import errorMiddleware from "./middlewares/errorMiddlerware";
 
