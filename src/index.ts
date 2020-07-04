@@ -15,12 +15,12 @@ io.on("connection", (socket: Socket) => {
     }
     if (user) {
       socket.emit("message", {
-        user: "admin",
+        user: "Chatify",
         text: `Hello ${user.name}, welcome to Chatify`,
       });
 
       socket.broadcast.to("general").emit("message", {
-        user: "admin",
+        user: "Chatify",
         text: `${user.name} has joined the chat`,
       });
 
@@ -47,7 +47,7 @@ io.on("connection", (socket: Socket) => {
 
     if (user) {
       io.to("general").emit("message", {
-        user: "admin",
+        user: "Chatify",
         text: `${user.name} has left the chat, see you soon`,
       });
     }
