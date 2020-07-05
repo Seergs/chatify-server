@@ -40,4 +40,6 @@ export const removeUser = (id: string) => {
 
 export const getUser = (id: string) => users.find((user) => user.id === id);
 
-export const getUsers = () => users;
+export const getUsers = () => {
+  return users.map((user) => user.name);
+};

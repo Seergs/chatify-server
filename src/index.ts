@@ -1,6 +1,11 @@
 import { Socket } from "socket.io";
 import { server, io } from "./app";
-import { addUser, getUser, removeUser } from "./controllers/userControllers";
+import {
+  addUser,
+  getUser,
+  removeUser,
+  getUsers,
+} from "./controllers/userControllers";
 import { addNewMessage } from "./controllers/messageControllers";
 import { connectToMongo } from "./dbConfig";
 
@@ -22,12 +27,13 @@ io.on("connection", (socket: Socket) => {
       socket.broadcast.to("general").emit("message", {
         user: "Chatify",
         text: `${user.name} has joined the chat`,
+        users: getUsers(),
       });
 
       //General is the chat room
       socket.join("general");
 
-      callback();
+      callback(getUsers());
     }
   });
 
@@ -49,6 +55,7 @@ io.on("connection", (socket: Socket) => {
       io.to("general").emit("message", {
         user: "Chatify",
         text: `${user.name} has left the chat, see you soon`,
+        users: getUsers(),
       });
     }
   });

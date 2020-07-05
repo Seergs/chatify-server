@@ -5,7 +5,7 @@ import http from "http";
 import socketio from "socket.io";
 import { config } from "dotenv";
 
-//config();
+config();
 
 import errorMiddleware from "./middlewares/errorMiddlerware";
 
