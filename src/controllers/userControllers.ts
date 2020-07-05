@@ -1,3 +1,6 @@
+import { NextFunction, Request, Response } from "express";
+import { ErrorHandler } from "../helpers/Error";
+
 type User = {
   id: string;
   name: string;
@@ -6,28 +9,11 @@ type User = {
 const users: User[] = [];
 
 export const addUser = ({ id, name }: { id: string; name: string }) => {
-  interface IResponse {
-    error: null | string;
-    user: User | null;
-  }
-  let response: IResponse = {
-    error: null,
-    user: null,
-  };
-  const existingUser = users.find((user) => user.name === name);
-
-  if (existingUser) {
-    response.error = "Username is taken";
-    return response;
-  }
-
   const user = { id, name };
 
   users.push(user);
 
-  response.user = user;
-
-  return response;
+  return user;
 };
 
 export const removeUser = (id: string) => {
@@ -42,4 +28,14 @@ export const getUser = (id: string) => users.find((user) => user.id === id);
 
 export const getUsers = () => {
   return users.map((user) => user.name);
+};
+
+export const validateUsername = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (users.find((user) => user.name === req.body.name)) {
+    next(new ErrorHandler(400, "Username is already taken"));
+  } else return res.sendStatus(200);
 };

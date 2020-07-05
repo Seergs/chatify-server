@@ -13,11 +13,8 @@ const PORT = process.env.PORT || 5000;
 
 io.on("connection", (socket: Socket) => {
   socket.on("join", ({ name }, callback: Function) => {
-    const { error, user } = addUser({ id: socket.id, name });
+    const user = addUser({ id: socket.id, name });
 
-    if (error) {
-      return callback(error);
-    }
     if (user) {
       socket.emit("message", {
         user: "Chatify",
